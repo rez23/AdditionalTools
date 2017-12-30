@@ -64,7 +64,7 @@ configAndroidVersion() {
 		
 
 doneMessage() {
-	if [ "$?" == "0" ]; then
+	if [ "$?" = "0" ]; then
 		 printf  "\n${green_text}Done!${normal_text}\n\n"
 	else
 		printf  "${red_text}\nError!\nSome error as occuring during the process. Exiting... :(\n\n${normal_text}"
@@ -73,6 +73,13 @@ doneMessage() {
 ############################################################
 ### Main ####################################################
 ############################################################
+if [[  -e "venv/bin/activate ]] && [[ $? = 1 ]]; then
+    printf "Creating the virtual python 2 envoirment\n"
+    virtualenv2 venv
+    if [[ $? = 1 ]; the
+        printf "impossible create python 2 virtual env\n plese install the python2-virtualenv package"
+     fi
+fi
 printf "Entering in the virtual python2 envoirment..\n\n"
 source venv/bin/activate
 printf "Setting up of envoirment...\n\n"
@@ -91,7 +98,7 @@ if [ -d "$CCACHE_DIRECTORY" ]; then
 else
 	printf "\n Creating "$CCACHE_DIRECTORY" directory\n"
 	mkdir $CCACHE_DIRECTORY
-	if [ "$?" == "0" ]; then
+	if [ "$?" = "0" ]; then
 		export CCACHE_DIR="$CCACHE_DIRECTORY"
 		printf  "${green_text}\nDone!\nThe ccache directory is sected to %s now!\n${normal_text}" $CCACHE_DIR
 	fi
@@ -102,7 +109,7 @@ configBuildTarget
 configBuildType
 printf  "${brown_text}\nSetting-up build variabiles for "$ANDROID_VERSION"_"$TARGET_DEVICE" variant:\n\n\n"
 lunch "$ANDROID_VERSION"_"$TARGET_DEVICE"-"$BUILD_TYPE"
-if [ "$?" == "0" ]; then
+if [ "$?" = "0" ]; then
 	printf  "${green_text}\nDone! Now is possible build android for "$TARGET_DEVICES"\n\n${normal_text}"
 else
         printf  "\n${red_text}Error!\nSome error as occured during setting up of envoirment. \nExiting\n${normal_text}"
